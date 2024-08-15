@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    font-family: Arial, Helvetica, sans-serif
+}
+
+#sidenav a.active {
+    @apply bg-slate-600 text-white;
+}
+
+#sidenav a:hover {
+    @apply bg-slate-500 text-white;
+}
+
+.responsive-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+@media (width <= 640px) {
+    .responsive-grid{
+        grid-template-columns: repeat(1, minmax(80vw, 1fr));
+    }
+}
