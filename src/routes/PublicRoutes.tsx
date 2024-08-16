@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom"
 import { Login } from "../pages/public/Login";
-import { routesProps } from "../interfaces/routes/routes.interfaces";
+import { routesProps } from "../interfaces";
 
 const routes: routesProps[] = [
     {

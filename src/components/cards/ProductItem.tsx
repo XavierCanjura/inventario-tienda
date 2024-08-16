@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Dots } from "../../assets/icons/Dots";
+import { Product } from "../../interfaces";
 
-export const ProductItem = () => {
+export const ProductItem = ({ product }: { product: Product }) => {
 
     const [showOptions, setShowOptions] = useState<boolean>(false);
 
@@ -14,19 +15,19 @@ export const ProductItem = () => {
             <img className="w-full h-[200px] rounded-[20px]" src={ imageURL } alt="product" />
             {/* Information */}
             <div className="px-2 py-2">
-                <p>Price</p>
-                <h4>Product Name</h4>
-                <p>Amount</p>
+                <p>${ product.price }</p>
+                <h4>{ product.name }</h4>
+                <p>Cantidad: { product.amount }</p>
             </div>
             {/* button options */}
             <div className="flex justify-center absolute cursor-pointer w-[25px] h-[25px] bg-orange-600 rounded-full top-[7px] right-[5px]" onClick={ toggleShowOptions }>
                 <span className="w-full h-full p-1"><Dots /></span>
             </div>
             {/* Options */}
-            <div className={`${showOptions ? 'absolute': 'hidden' } bg-white min-h-fit flex flex-col rounded-lg top-[32px] right-[6px]`}>
-                <span className="py-0.5 cursor-pointer hover:bg-slate-500 hover:text-white px-2">add amounts</span>
-                <span className="py-0.5 cursor-pointer hover:bg-slate-500 hover:text-white px-2">edit</span>
-                <span className="py-0.5 cursor-pointer hover:bg-slate-500 hover:text-white px-2">delete</span>
+            <div className={`${showOptions ? 'absolute': 'hidden' } bg-white min-h-fit flex flex-col rounded-lg top-[33px] right-[6px]`}>
+                <span className="py-1 cursor-pointer hover:bg-orange-500 hover:text-white px-2 rounded-t-lg">Agregar Cantidad</span>
+                <span className="py-1 cursor-pointer hover:bg-orange-500 hover:text-white px-2">Editar</span>
+                <span className="py-1 cursor-pointer hover:bg-orange-500 hover:text-white px-2 rounded-b-lg">Eliminar</span>
             </div>
         </div>
     )

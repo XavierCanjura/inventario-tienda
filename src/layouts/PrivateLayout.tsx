@@ -1,7 +1,7 @@
 import { PropsWithChildren, useEffect, useState } from "react"
 import { SideNav } from "./SideNav"
 import { MenuIcon } from "../assets/icons/Menu";
-import { useMediaQueris } from "../hooks/useMediaQuerys";
+import { useMediaQueris } from "../hooks";
 
 export const PrivateLayout = ({ children, title }: PropsWithChildren & { title?: string }) => {
     const { isTablet  } = useMediaQueris();
@@ -17,8 +17,8 @@ export const PrivateLayout = ({ children, title }: PropsWithChildren & { title?:
     return (
         <div className="flex">
             <SideNav  toggleShow={ toggleShow } show={ show } />
-            <div className="w-full transition-all duration-500 ease-in-out">
-                <div className="w-full h-[50px] bg-slate-600 flex items-center px-2">
+            <div className={`${ show ? 'w-full md:w-[calc(100%-300px)] md:ml-[300px]' : 'w-full m-0'} transition-all duration-500 ease-in-out`}>
+                <div className="w-full h-[50px] bg-orange-600 flex items-center px-2">
                     <span className="cursor-pointer" onClick={ toggleShow }>{ show ? '' : <MenuIcon /> }</span>
                 </div>
                 <div className="p-2 md:p-4">
