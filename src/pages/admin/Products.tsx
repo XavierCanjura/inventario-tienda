@@ -46,6 +46,7 @@ export const Products = () => {
 
     useEffect( () => {
         getProductsList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
