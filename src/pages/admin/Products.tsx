@@ -28,6 +28,8 @@ export const Products = () => {
         if( productForm.amount <= 0 ) return;
         if( productForm.price.trim() === '' || isNaN( Number(productForm.price) ) ) return;
         addProduct(productForm);
+        toggleShowModalAdd();
+        setProductForm({ ...initialValues });
     };
     
     const toggleShowModalAdd = () => setShowModalAdd(!showModalAdd);
@@ -74,14 +76,9 @@ export const Products = () => {
                                 <ProductItem key={ index } product={ product } />
                             ))
                         }
-                        {
-                            searchProducts().map((product, index) => (
-                                <ProductItem key={ index } product={ product } />
-                            ))
-                        }
                     </div>
                 </div>
-                <div className="md:hidden fixed w-[50px] h-[50px] bg-orange-600 rounded-full bottom-2 right-2 shadow-lg">
+                <div className="md:hidden fixed w-[50px] h-[50px] bg-orange-600 rounded-full bottom-2 right-2 shadow-lg" onClick={ toggleShowModalAdd }>
                     <button className="w-full h-full flex justify-center items-center"><AddIcon /></button>
                 </div>
 
@@ -123,9 +120,17 @@ export const Products = () => {
                             />
 
                             <InputCustom 
+                                parentClass="md:w-[45%]"
+                                label="Imagen del producto"
+                                placeholder="Copie la direccion de la imagen"
+                                value={ productForm.image }
+                                onChange={(event) => setProductForm({ ...productForm, image: event.target.value }) }
+                            />
+
+                            {/* <InputCustom 
                                 parentClass="md:w-[45%] file-select"
                                 type="file"
-                            />
+                            /> */}
 
                         </div>
 

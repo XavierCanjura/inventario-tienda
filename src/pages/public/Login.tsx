@@ -1,13 +1,15 @@
 import { useEffect } from "react";
-import { firebaseApi } from "../../apis/firebase"
+// import { firebaseApi } from "../../apis/firebase"
 import { ButtonCustom, InputCustom } from "../../components";
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
 
-    const { getData } = firebaseApi();
+    const navigate = useNavigate();
+
+    const handleClick = () => { navigate('/dash/productos') }
 
     useEffect( () => {
-        getData('productos');
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -23,12 +25,14 @@ export const Login = () => {
                         <h1 className="text-5xl font-extrabold mb-[5%]">Login</h1>
                         <InputCustom 
                             label="Correo electronico"
+                            placeholder="example@mail.com"
                             type="email"
                             parentClass="md:w-full my-4"
                         />
                         <InputCustom 
                             label="Contraseña"
                             type="password"
+                            placeholder=""
                             parentClass="md:w-full mb-4"
                         />
 
@@ -37,6 +41,7 @@ export const Login = () => {
                                 text="Ingresar"
                                 type="button"
                                 buttonClass="w-[150px]"
+                                onClick={ handleClick }
                             />
                         </div>
                     </div>
