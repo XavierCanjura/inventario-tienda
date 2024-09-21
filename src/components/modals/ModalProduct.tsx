@@ -28,7 +28,7 @@ export const ModalProduct = ({
                         label="Nombre de producto"
                         placeholder="Ingrese el nombre"
                         value={ data.name }
-                        onChange={ (event) => setForm({ ...data, name: event.target.value }) }
+                        onChange={ (event) => setForm?.({ ...data, name: event.target.value }) }
                     />
 
                     <InputCustom 
@@ -37,7 +37,7 @@ export const ModalProduct = ({
                         placeholder="Ingrese la cantidad"
                         type="number"
                         value={ data.amount.toString() }
-                        onChange={ (event) => setForm({ ...data, amount: Number(event.target.value) }) }
+                        onChange={ (event) => setForm?.({ ...data, amount: Number(event.target.value) }) }
                     />
                     
                     <InputCustom 
@@ -45,7 +45,7 @@ export const ModalProduct = ({
                         label="Precio del producto"
                         placeholder="Ingrese el precio"
                         value={ data.price }
-                        onChange={(event) => setForm({ ...data, price: event.target.value }) }
+                        onChange={(event) => setForm?.({ ...data, price: event.target.value }) }
                     />
 
                     <InputCustom 
@@ -53,7 +53,7 @@ export const ModalProduct = ({
                         label="Imagen del producto"
                         placeholder="Copie la direccion de la imagen"
                         value={ data.image }
-                        onChange={(event) => setForm({ ...data, image: event.target.value }) }
+                        onChange={(event) => setForm?.({ ...data, image: event.target.value }) }
                     />
 
                     {/* <InputCustom 

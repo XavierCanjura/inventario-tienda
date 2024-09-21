@@ -95,7 +95,7 @@ export const Usuarios = () => {
                 </div>
             </PrivateLayout>
 
-            <Modal show={ showModalAdd }>
+            <Modal show={ showModalAdd } onClickClose={ () => {} } title="">
                 <div className="w-full flex flex-col px-5 py-3">
                     <div className="relative">
                         <h2 className="text-xl md:text-3xl md:text-center font-semibold uppercase">Agregar Usuario</h2>
