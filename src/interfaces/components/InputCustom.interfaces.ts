@@ -1,4 +1,5 @@
 export interface InputProps {
+    disabled?: boolean;
     label?: string;
     placeholder?: string;
     parentClass?: string;

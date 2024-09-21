@@ -2,7 +2,19 @@ import { useState } from "react";
 import { Dots } from "../../assets/icons/Dots";
 import { Product } from "../../interfaces";
 
-export const ProductItem = ({ product }: { product: Product }) => {
+export const ProductItem = (
+    { 
+        product, 
+        setForm, 
+        toggleShowModalEdit ,
+        toggleShowModalAmount
+    }: { 
+        product: Product, 
+        setForm: React.Dispatch<React.SetStateAction<Product>>,
+        toggleShowModalEdit: () => void,
+        toggleShowModalAmount: () => void,
+    }
+) => {
 
     const [showOptions, setShowOptions] = useState<boolean>(false);
 
@@ -24,9 +36,23 @@ export const ProductItem = ({ product }: { product: Product }) => {
                 <span className="w-full h-full p-1"><Dots /></span>
             </div>
             {/* Options */}
-            <div className={`${showOptions ? 'absolute': 'hidden' } bg-white min-h-fit flex flex-col rounded-lg top-[33px] right-[6px]`}>
-                <span className="py-1 cursor-pointer hover:bg-orange-500 hover:text-white px-2 rounded-t-lg">Agregar Cantidad</span>
-                <span className="py-1 cursor-pointer hover:bg-orange-500 hover:text-white px-2">Editar</span>
+            <div className={`${showOptions ? 'absolute': 'hidden' } bg-[#F0F0F0] min-h-fit flex flex-col rounded-lg top-[33px] right-[6px]`}>
+                <span 
+                    className="py-1 cursor-pointer hover:bg-orange-500 hover:text-white px-2 rounded-t-lg"
+                    onClick={ () => {
+                        setForm({ ...product });
+                        toggleShowModalAmount();
+                        toggleShowOptions();
+                    } }
+                >Agregar Cantidad</span>
+                <span 
+                    className="py-1 cursor-pointer hover:bg-orange-500 hover:text-white px-2" 
+                    onClick={ () => {
+                        setForm({ ...product });
+                        toggleShowModalEdit();
+                        toggleShowOptions();
+                    } }
+                >Editar</span>
                 <span className="py-1 cursor-pointer hover:bg-orange-500 hover:text-white px-2 rounded-b-lg">Eliminar</span>
             </div>
         </div>

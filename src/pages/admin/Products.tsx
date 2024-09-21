@@ -1,50 +1,43 @@
-import { useEffect, useState } from "react"
-import { AddIcon } from "../../assets/icons/Add"
-import { ButtonCustom, InputCustom, Modal, ProductItem } from "../../components"
-import { useProductStore } from "../../hooks"
-import { PrivateLayout } from "../../layouts/PrivateLayout"
-import { CloseIcon } from "../../assets/icons/Close"
-import { Product } from "../../interfaces"
+// REACT PACKAGE
+import { useEffect } from "react"
 
-const initialValues: Product = { 
-    id: '',
-    name: '', 
-    amount: 0, 
-    price: '', 
-    image: '', 
-    marca: '' 
-}
+// COMPONENTS
+import { ButtonCustom, InputCustom, ModalAddAmount, ModalProduct, ProductItem } from "../../components"
+
+// CUSTOM HOOKS
+import { useProductStore } from "../../hooks"
+
+// LAYOUT
+import { PrivateLayout } from "../../layouts/PrivateLayout"
+
+// ICONS
+import { AddIcon } from "../../assets/icons/Add"
 
 export const Products = () => {
 
-    const { productsList, getProductsList, addProduct } = useProductStore();
-    const [inputSearch, setInputSearch] = useState<string>('');
-    const [productForm, setProductForm] = useState<Product>(initialValues);
-    const [showModalAdd, setShowModalAdd] = useState<boolean>(false);
+    const { 
+        productsList, 
+        productForm,
+        showModalAdd,
+        showModalAmount,
+        showModalEdit,
+        newAmount,
+        message,
+        setProductForm,
+        setNewAmount,
+        setInputSearch,
+        searchProducts,
+        handleAddAmount,
+        handleAddProduct,
+        handleEditProduct,
+        handleClickCancel,
+        getProductsList,
+        toggleShowModalAdd,
+        toggleShowModalAmount,
+        toggleShowModalEdit
+    } = useProductStore();
 
-    const handleAddProduct = (event: React.FormEvent<HTMLFormElement>) => { 
-        event.preventDefault();
-        if( productForm.name.trim() === '' ) return;
-        if( productForm.amount <= 0 ) return;
-        if( productForm.price.trim() === '' || isNaN( Number(productForm.price) ) ) return;
-        addProduct(productForm);
-        toggleShowModalAdd();
-        setProductForm({ ...initialValues });
-    };
-    
-    const toggleShowModalAdd = () => setShowModalAdd(!showModalAdd);
-
-    const handleClickCancel = () => {
-        toggleShowModalAdd();
-        setProductForm({ ...initialValues });
-    }
-
-    const searchProducts = (): Product[] => {
-        if(inputSearch === "") return productsList;
-        const productsSearch: Product[] = productsList.filter( (product) => product.name.toLowerCase().includes(inputSearch.toLowerCase()) );
-        return productsSearch;
-    }
-
+    useEffect( () => { console.log(message) }, [message]);
 
     useEffect( () => {
         getProductsList();
@@ -73,7 +66,13 @@ export const Products = () => {
                     <div className="responsive-grid gap-y-4 gap-2">
                         {
                             searchProducts().map((product, index) => (
-                                <ProductItem key={ index } product={ product } />
+                                <ProductItem 
+                                    key = { index } 
+                                    product = { product }
+                                    setForm = { setProductForm }
+                                    toggleShowModalEdit = { toggleShowModalEdit } 
+                                    toggleShowModalAmount = { toggleShowModalAmount }
+                                />
                             ))
                         }
                     </div>
@@ -84,72 +83,37 @@ export const Products = () => {
 
             </PrivateLayout>
 
-            <Modal show={ showModalAdd }>
-                <div className="w-full flex flex-col px-5 py-3">
-                    <div className="relative">
-                        <h2 className="text-xl md:text-3xl md:text-center font-semibold uppercase">Agregar Producto</h2>
-                        <div className="absolute w-[25px] h-[25px] top-0 right-0 cursor-pointer" onClick={ toggleShowModalAdd }>
-                            <CloseIcon stroke="!stroke-orange-600" />
-                        </div>
-                    </div>                    
-                    <form className="w-full flex flex-wrap mt-5 overflow-y-auto" method="post" onSubmit={ handleAddProduct }>
-                        <div className="w-full flex flex-wrap justify-between gap-3 md:gap-1">
-                            <InputCustom 
-                                parentClass="md:w-[45%]"
-                                label="Nombre de producto"
-                                placeholder="Ingrese el nombre"
-                                value={ productForm.name }
-                                onChange={ (event) => setProductForm({ ...productForm, name: event.target.value }) }
-                            />
+            {/* Modal for create products */}
+            <ModalProduct
+                showModal = { showModalAdd }
+                handleClickCancel = { handleClickCancel }
+                toggleShowModal = { toggleShowModalAdd }
+                onSubmit = { handleAddProduct }
+                setForm = { setProductForm }
+                data={ productForm }
+            />
 
-                            <InputCustom 
-                                parentClass="md:w-[45%]"
-                                label="Cantidad de producto"
-                                placeholder="Ingrese la cantidad"
-                                type="number"
-                                value={ productForm.amount.toString() }
-                                onChange={ (event) => setProductForm({ ...productForm, amount: Number(event.target.value) }) }
-                            />
-                            
-                            <InputCustom 
-                                parentClass="md:w-[45%]"
-                                label="Precio del producto"
-                                placeholder="Ingrese el precio"
-                                value={ productForm.price }
-                                onChange={(event) => setProductForm({ ...productForm, price: event.target.value }) }
-                            />
+            {/* modal for edit products */}
+            <ModalProduct
+                showModal = { showModalEdit }
+                handleClickCancel = { handleClickCancel }
+                toggleShowModal = { toggleShowModalEdit }
+                onSubmit = { handleEditProduct }
+                setForm = { setProductForm }
+                data = { productForm }
+                isCreate = { false }
+            />
 
-                            <InputCustom 
-                                parentClass="md:w-[45%]"
-                                label="Imagen del producto"
-                                placeholder="Copie la direccion de la imagen"
-                                value={ productForm.image }
-                                onChange={(event) => setProductForm({ ...productForm, image: event.target.value }) }
-                            />
-
-                            {/* <InputCustom 
-                                parentClass="md:w-[45%] file-select"
-                                type="file"
-                            /> */}
-
-                        </div>
-
-                        <div className="flex w-full border-t justify-end mt-8 pt-2 gap-x-2">
-                            <ButtonCustom 
-                                text="Agregar"
-                                type="submit"
-                            />
-                            
-                            <ButtonCustom 
-                                text="Cancelar"
-                                buttonClass="bg-slate-600"
-                                type="button"
-                                onClick={ handleClickCancel }
-                            />
-                        </div>
-                    </form>
-                </div>
-            </Modal>
+            {/* Modal for add amount */}
+            <ModalAddAmount 
+                showModal = { showModalAmount }
+                handleClickCancel = { handleClickCancel }
+                toggleShowModal = { toggleShowModalAmount }
+                onSubmit = { handleAddAmount }
+                setValue = { (event) => setNewAmount(Number(event.target.value)) }
+                data = { productForm }
+                value = { newAmount.toString() }
+            />
         </>
     )
 }

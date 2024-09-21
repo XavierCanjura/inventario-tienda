@@ -1,18 +1,30 @@
 import { InputProps } from "../../interfaces"
 
-export const InputCustom = ({ label, placeholder, inputClass, parentClass, type = 'text', value, onChange }: InputProps) => {
+export const InputCustom = (
+    { 
+        disabled = false,
+        label, 
+        placeholder, 
+        inputClass, 
+        parentClass, 
+        type = 'text', 
+        value, 
+        onChange 
+    }: InputProps
+) => {
     
     return (
-        <div className={`w-full min-h-max md:w-[250px] ${ parentClass }`}>
+        <div className={`w-full min-h-max md:w-[250px] my-1 ${ parentClass }`}>
             {
                 label !== undefined && (
                     <p>{ label }</p>
                 )
             }
             <input 
+                disabled = { disabled }
                 type={ type } 
                 placeholder={ placeholder }
-                className={`w-full h-[35px] border rounded-[20px] px-3 outline-none border-black/20 ${ inputClass }`} 
+                className={`w-full min-h-[50px] h-auto border rounded-[20px] px-3 outline-none border-black/20 ${ inputClass }`} 
                 value={ value }
                 onChange={ (event) => onChange?.(event) }
             />

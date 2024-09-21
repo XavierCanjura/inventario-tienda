@@ -1,5 +1,5 @@
 import { routesProps } from "../interfaces/routes/routes.interfaces";
-import { Products, Usuarios } from "../pages/admin";
+import { Products, Usuarios, Marcas, Ventas } from "../pages/admin";
 
 export const routes: routesProps[] = [
     {
@@ -7,19 +7,19 @@ export const routes: routesProps[] = [
         label: "Productos",
         element: <Products />
     },
-    // {
-    //     path: "marcas",
-    //     label: "Marcas",
-    //     element: <Marcas />
-    // },
+    {
+        path: "marcas",
+        label: "Marcas",
+        element: <Marcas />
+    },
     {
         path: "usuarios",
         label: "Usuarios",
         element: <Usuarios />
     },
-    // {
-    //     path: "ventas",
-    //     label: "Ventas",
-    //     element: <Ventas />
-    // },
+    {
+        path: "ventas",
+        label: "Ventas",
+        element: <Ventas />
+    },
 ]

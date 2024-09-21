@@ -57,7 +57,7 @@ export const Usuarios = () => {
     return (
         <>
             <PrivateLayout title="Usuarios">
-                <div className="flex flex-wrap justify-end my-3 gap-3 sticky z-[99] top-0 bg-white">
+                <div className="flex flex-wrap justify-end my-3 gap-3 sticky z-[99] top-0 bg-[#F0F0F0]">
                     <InputCustom 
                         placeholder="Buscar"
                         onChange={ (event) => setInputSearch(event.target.value) }
@@ -71,7 +71,7 @@ export const Usuarios = () => {
                 </div>
 
                 <div className="flex flex-wrap flex-col gap-2.5 pb-3 relative overflow-x-auto">
-                    <div className="flex min-w-max gap-2 border rounded-[20px] h-[50px] max-h-fit bg-white p-3 shadow-md">
+                    <div className="flex min-w-max gap-2 border rounded-[20px] h-[50px] max-h-fit bg-[#F0F0F0] p-3 shadow-md">
                         <div className='min-w-[150px] xl:w-5/12 font-bold text-lg'>Nombre</div>
                         <div className='min-w-[150px] xl:w-5/12 font-bold text-lg'>Apellido</div>
                         <div className='min-w-[150px] xl:w-5/12 font-bold text-lg'>Usuario</div>

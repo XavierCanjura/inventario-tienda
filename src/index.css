@@ -6,6 +6,10 @@
     font-family: Arial, Helvetica, sans-serif
 }
 
+body {
+    background: #F0F0F0;
+}
+
 #sidenav a.active {
     @apply bg-orange-600 text-white;
 }

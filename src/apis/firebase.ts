@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 
-import { getDatabase, ref, get, child, set } from "firebase/database";
+import { getDatabase, ref, get, child, set, update } from "firebase/database";
 
 // set, update, remove
 // TODO: Add SDKs for Firebase products that you want to use
@@ -36,8 +36,9 @@ export const firebaseApi = () => {
         await set( ref(db, `${collectionName}/${data.id}`), data );
     }
 
-    const updateData  = async (collectionName: string) => {
-        console.log(collectionName)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const updateData  = async (collectionName: string, data: any) => {
+        await update( ref(db, `${collectionName}/${data.id}`), data);
     }
 
     const deleteData  = async (collectionName: string) => {
