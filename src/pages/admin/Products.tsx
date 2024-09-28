@@ -2,7 +2,7 @@
 import { useEffect } from "react"
 
 // COMPONENTS
-import { ButtonCustom, InputCustom, ModalAddAmount, ModalProduct, ProductItem } from "../../components"
+import { ButtonCustom, InputCustom, ModalAddAmount, ModalDelete, ModalProduct, ProductItem } from "../../components"
 
 // CUSTOM HOOKS
 import { useProductStore } from "../../hooks"
@@ -16,11 +16,13 @@ import { AddIcon } from "../../assets/icons/Add"
 export const Products = () => {
 
     const { 
+        fetching,
         productsList, 
         productForm,
         showModalAdd,
         showModalAmount,
         showModalEdit,
+        showModalDelete,
         newAmount,
         message,
         setProductForm,
@@ -30,11 +32,13 @@ export const Products = () => {
         handleAddAmount,
         handleAddProduct,
         handleEditProduct,
+        handleDeleteProduct,
         handleClickCancel,
         getProductsList,
         toggleShowModalAdd,
         toggleShowModalAmount,
-        toggleShowModalEdit
+        toggleShowModalEdit,
+        toggleShowModalDelete
     } = useProductStore();
 
     useEffect( () => { console.log(message) }, [message]);
@@ -61,7 +65,10 @@ export const Products = () => {
                         />
                     </div>
                     {
-                        productsList.length === 0 && (<h1 className="w-full text-center">Cargando...</h1>)
+                        (productsList.length === 0 && fetching) && (<h1 className="w-full text-center">Cargando...</h1>)
+                    }
+                    {
+                        (productsList.length === 0 && !fetching) && (<h1 className="w-full text-center">No hay registros en la base de datos</h1>)
                     }
                     <div className="responsive-grid gap-y-4 gap-2">
                         {
@@ -72,6 +79,7 @@ export const Products = () => {
                                     setForm = { setProductForm }
                                     toggleShowModalEdit = { toggleShowModalEdit } 
                                     toggleShowModalAmount = { toggleShowModalAmount }
+                                    toggleShowModalDelete = { toggleShowModalDelete }
                                 />
                             ))
                         }
@@ -113,6 +121,16 @@ export const Products = () => {
                 setValue = { (event) => setNewAmount(Number(event.target.value)) }
                 data = { productForm }
                 value = { newAmount.toString() }
+            />
+
+            {/* Modal for delete product */}
+            <ModalDelete 
+                showModal = { showModalDelete }
+                data={ productForm }
+                toggleShowModal={ toggleShowModalDelete }
+                handleClickCancel={ handleClickCancel }
+                onSubmit={ handleDeleteProduct } 
+                title={ `Eliminar - ${ productForm.name }` }               
             />
         </>
     )

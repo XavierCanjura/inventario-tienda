@@ -7,18 +7,27 @@ export const ProductItem = (
         product, 
         setForm, 
         toggleShowModalEdit ,
-        toggleShowModalAmount
+        toggleShowModalAmount,
+        toggleShowModalDelete
     }: { 
         product: Product, 
         setForm: React.Dispatch<React.SetStateAction<Product>>,
         toggleShowModalEdit: () => void,
         toggleShowModalAmount: () => void,
+        toggleShowModalDelete: () => void,
+
     }
 ) => {
 
     const [showOptions, setShowOptions] = useState<boolean>(false);
 
     const toggleShowOptions = () => setShowOptions(!showOptions);
+
+    const handleClick = (callback: () => void) => {
+        setForm({ ...product });
+        callback();
+        toggleShowOptions();
+    }
 
     // const imageURL = "https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
     return (
@@ -40,20 +49,21 @@ export const ProductItem = (
                 <span 
                     className="py-1 cursor-pointer hover:bg-orange-500 hover:text-white px-2 rounded-t-lg"
                     onClick={ () => {
-                        setForm({ ...product });
-                        toggleShowModalAmount();
-                        toggleShowOptions();
+                        handleClick(toggleShowModalAmount);
                     } }
                 >Agregar Cantidad</span>
                 <span 
                     className="py-1 cursor-pointer hover:bg-orange-500 hover:text-white px-2" 
                     onClick={ () => {
-                        setForm({ ...product });
-                        toggleShowModalEdit();
-                        toggleShowOptions();
+                        handleClick(toggleShowModalEdit);
                     } }
                 >Editar</span>
-                <span className="py-1 cursor-pointer hover:bg-orange-500 hover:text-white px-2 rounded-b-lg">Eliminar</span>
+                <span 
+                    className="py-1 cursor-pointer hover:bg-orange-500 hover:text-white px-2 rounded-b-lg"
+                    onClick={ () => {
+                        handleClick(toggleShowModalDelete);
+                    } }
+                >Eliminar</span>
             </div>
         </div>
     )

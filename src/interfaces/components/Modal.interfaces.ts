@@ -10,4 +10,5 @@ export interface ModalProductProps {
     isCreate?: boolean;
     value?: string;
     setValue?: React.ChangeEventHandler<HTMLInputElement>;
+    title?: string;
 }
