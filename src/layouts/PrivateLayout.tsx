@@ -21,7 +21,7 @@ export const PrivateLayout = ({ children, title }: PropsWithChildren & { title?:
                 <div className="w-full h-[50px] bg-orange-600 flex items-center px-2">
                     <span className="cursor-pointer" onClick={ toggleShow }>{ show ? '' : <MenuIcon /> }</span>
                 </div>
-                <div className="p-2 md:p-4">
+                <div className="p-2 md:mt-4 md:p-4">
                     <h1 className="text-2xl text-center md:text-4xl font-semibold uppercase">{ title }</h1>
                     { children }
                 </div>
