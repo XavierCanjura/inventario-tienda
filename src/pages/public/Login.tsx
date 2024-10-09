@@ -1,17 +1,23 @@
 import { useEffect } from "react";
-// import { firebaseApi } from "../../apis/firebase"
 import { ButtonCustom, InputCustom } from "../../components";
-import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../hooks";
+import { sessionStore } from "../../helpers/sessionStore";
+import { toast } from "react-toastify";
 
 export const Login = () => {
 
-    const navigate = useNavigate();
+    const {  loginForm, message, authentication, setLoginForm, navigateToHome } = useAuthStore();
+    const { existSession } = sessionStore();
 
-    const handleClick = () => { navigate('/dash/productos') }
+    const handleClick = () => { authentication() }
+
+    useEffect(() => {
+        if(existSession('auth')) return navigateToHome();
+    });
 
     useEffect( () => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+        if(message) toast.error(message);
+    }, [message])
 
     return (
         <div className="flex flex-col sm:flex-row w-dvw h-dvh">
@@ -28,12 +34,17 @@ export const Login = () => {
                             placeholder="example@mail.com"
                             type="email"
                             parentClass="md:w-full my-4"
+                            value={ loginForm.email }
+                            onChange={ (event) => setLoginForm({ ...loginForm, email: event.target.value }) }
                         />
                         <InputCustom 
                             label="Contraseña"
                             type="password"
-                            placeholder=""
+                            placeholder="*****"
                             parentClass="md:w-full mb-4"
+                            value={ loginForm.password }
+                            onChange={ (event) => setLoginForm({ ...loginForm, password: event.target.value }) }
+
                         />
 
                         <div className="w-full flex justify-center">
