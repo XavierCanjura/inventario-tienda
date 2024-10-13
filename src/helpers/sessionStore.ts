@@ -1,28 +1,28 @@
 export const sessionStore = () => {
 
-    function saveSession<T>(key: string, data: T): void{
+    function saveSession<T>(data: T): void{
         const dataString = JSON.stringify(data);
-        sessionStorage.setItem(key, dataString);
+        sessionStorage.setItem('auth', dataString);
     }
 
-    function getSession<T>(key: string): T | string {
-        const dataString = sessionStorage.getItem(key);
+    function getSession<T>(): T | string {
+        const dataString = sessionStorage.getItem('auth');
 
-        if(!existSession(key)) return "No se encontro la session";
+        if(!existSession()) return "No se encontro la session";
 
         const data: T = JSON.parse(dataString!);
         
         return data;
     }
 
-    const existSession = (key: string): boolean => {
-        const dataString = sessionStorage.getItem(key);
+    const existSession = (): boolean => {
+        const dataString = sessionStorage.getItem('auth');
         if(!dataString) return false;
         return true;
     }
 
-    const destroySession = (key: string) => {
-        sessionStorage.removeItem(key);
+    const destroySession = () => {
+        sessionStorage.removeItem('auth');
     }
 
     return {
