@@ -5,4 +5,5 @@ export interface Product {
     price: string;
     image: string;
     marca: string;
+    idUser: string;
 }

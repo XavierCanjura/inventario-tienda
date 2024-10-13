@@ -1,6 +1,12 @@
 import { useState } from "react"
-import { Product } from "../interfaces"
+
+import { Product, User } from "../interfaces"
+
 import { firebaseApi } from "../apis/firebase";
+
+import { useAuthStore } from "./useAuthStore";
+import { sessionStore } from "../helpers/sessionStore";
+
 import { showMessage } from "../helpers/message";
 
 const initialValues: Product = { 
@@ -9,13 +15,16 @@ const initialValues: Product = {
     amount: 0, 
     price: '', 
     image: '', 
-    marca: '' 
+    marca: '',
+    idUser: ''
 }
 
 export const useProductStore = () => {
     const collectionName = 'productos';
 
     const { getData, addData, updateData, deleteData } = firebaseApi();
+    const { getSession } = sessionStore();
+    const { navigateToLogin } = useAuthStore();
 
     // STATE ABOUT PRODUCTS
     const [inputSearch, setInputSearch] = useState<string>('');
@@ -56,7 +65,11 @@ export const useProductStore = () => {
     const handleAddProduct = (event: React.FormEvent<HTMLFormElement>) => { 
         event.preventDefault();
         if( !validateProductForm(productForm) ) return showMessage({ message: "Completar los campos", type: "warning"});
-        addProduct(productForm);
+        
+        const auth = getSession<User>();
+        if( !auth ) return navigateToLogin();
+
+        addProduct({ ...productForm, idUser: auth.id });
         toggleShowModalAdd();
         setProductForm({ ...initialValues });
         showMessage({ message: "Producto creado correctamente", type: "success" });
@@ -101,18 +114,26 @@ export const useProductStore = () => {
     }
 
     // METHODS BY CRUD
-    const getProductsList = async () => {
+    const getProductsListByIdUser = async () => {
+
+        const auth = getSession<User>();
+        if( !auth ) return navigateToLogin();
+
         setFetching(true);
         const products = await getData(collectionName) as Product[];
-        const productMapper: Product[] = products.map((product) => ({
+        const productsFilter: Product[] = products.filter((product) => product.idUser === auth.id );
+
+        const productsMapper: Product[] = productsFilter.map((product) => ({
             id: product.id.toString(),
             name: product.name,
             amount: product.amount,
             image: product.image,
             marca: product.marca,
-            price: product.price
-        }))
-        setProductsList([ ...productMapper ]);
+            price: product.price,
+            idUser: product.idUser
+        }) );
+
+        setProductsList([ ...productsMapper ]);
         setFetching(false);
     }
 
@@ -120,20 +141,20 @@ export const useProductStore = () => {
         const date = new Date();
         data.id = date.getTime().toString();
         addData(collectionName, data);
-        getProductsList();
+        getProductsListByIdUser();
     }
     const editProduct = (data: Product) => {
         updateData(collectionName, data);
-        getProductsList();
+        getProductsListByIdUser();
     }
     const addAmount = (data: Product, newAmount: number) => {
         data.amount = data.amount + newAmount;
         updateData(collectionName, data);
-        getProductsList();
+        getProductsListByIdUser();
     }
     const deleteProducto = (data: Product) => {
         deleteData(collectionName, data.id);
-        getProductsList();
+        getProductsListByIdUser();
     }
 
     return {
@@ -162,6 +183,6 @@ export const useProductStore = () => {
         toggleShowModalAmount,
         toggleShowModalEdit,
         toggleShowModalDelete,
-        getProductsList
+        getProductsList: getProductsListByIdUser
     }
 }

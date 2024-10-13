@@ -1,3 +1,4 @@
+import { Option } from "./SelectCustom.interfaces";
 
 export interface ModalProps<T> {
     showModal: boolean;
@@ -10,4 +11,5 @@ export interface ModalProps<T> {
     value?: string;
     setValue?: React.ChangeEventHandler<HTMLInputElement>;
     title?: string;
+    optionsMap?: { [ key: string ]: Option[] }
 }
