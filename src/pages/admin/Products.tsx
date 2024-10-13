@@ -24,7 +24,6 @@ export const Products = () => {
         showModalEdit,
         showModalDelete,
         newAmount,
-        message,
         setProductForm,
         setNewAmount,
         setInputSearch,
@@ -40,8 +39,6 @@ export const Products = () => {
         toggleShowModalEdit,
         toggleShowModalDelete
     } = useProductStore();
-
-    useEffect( () => { console.log(message) }, [message]);
 
     useEffect( () => {
         getProductsList();
@@ -75,7 +72,7 @@ export const Products = () => {
                             searchProducts().map((product, index) => (
                                 <ProductItem 
                                     key = { index } 
-                                    product = { product }
+                                    data = { product }
                                     setForm = { setProductForm }
                                     toggleShowModalEdit = { toggleShowModalEdit } 
                                     toggleShowModalAmount = { toggleShowModalAmount }

@@ -1,22 +1,15 @@
 import { useState } from "react";
 import { Dots } from "../../assets/icons/Dots";
-import { Product } from "../../interfaces";
+import { ItemProps, Product } from "../../interfaces";
 
 export const ProductItem = (
     { 
-        product, 
+        data, 
         setForm, 
-        toggleShowModalEdit ,
+        toggleShowModalEdit,
         toggleShowModalAmount,
         toggleShowModalDelete
-    }: { 
-        product: Product, 
-        setForm: React.Dispatch<React.SetStateAction<Product>>,
-        toggleShowModalEdit: () => void,
-        toggleShowModalAmount: () => void,
-        toggleShowModalDelete: () => void,
-
-    }
+    }: ItemProps<Product>
 ) => {
 
     const [showOptions, setShowOptions] = useState<boolean>(false);
@@ -24,7 +17,7 @@ export const ProductItem = (
     const toggleShowOptions = () => setShowOptions(!showOptions);
 
     const handleClick = (callback: () => void) => {
-        setForm({ ...product });
+        setForm({ ...data });
         callback();
         toggleShowOptions();
     }
@@ -33,12 +26,14 @@ export const ProductItem = (
     return (
         <div className="flex flex-col relative min-w-[80vw] sm:min-w-[250px] min-h-fit border-2 rounded-[20px] shadow-md">
             {/* Image */}
-            <img className="w-full h-[200px] rounded-[20px]" src={ product.image } alt={ product.name } />
+            <div className="w-full h-[150px]">
+                <img className="w-full h-full object-contain" src={ data.image } alt="" />
+            </div>
             {/* Information */}
             <div className="px-2 py-2">
-                <h4>{ product.name }</h4>
-                <p>${ product.price }</p>
-                <p>Cantidad: { product.amount }</p>
+                <h4>{ data.name }</h4>
+                <p>${ data.price }</p>
+                <p>Cantidad: { data.amount }</p>
             </div>
             {/* button options */}
             <div className="flex justify-center absolute cursor-pointer w-[25px] h-[25px] bg-orange-600 rounded-full top-[7px] right-[5px]" onClick={ toggleShowOptions }>
@@ -49,7 +44,7 @@ export const ProductItem = (
                 <span 
                     className="py-1 cursor-pointer hover:bg-orange-500 hover:text-white px-2 rounded-t-lg"
                     onClick={ () => {
-                        handleClick(toggleShowModalAmount);
+                        handleClick(toggleShowModalAmount!);
                     } }
                 >Agregar Cantidad</span>
                 <span 

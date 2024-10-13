@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Product } from "../interfaces"
 import { firebaseApi } from "../apis/firebase";
+import { showMessage } from "../helpers/message";
 
 const initialValues: Product = { 
     id: '',
@@ -21,7 +22,6 @@ export const useProductStore = () => {
     const [productsList, setProductsList] = useState<Product[]>([]);
     const [productForm, setProductForm] = useState<Product>(initialValues);
     const [newAmount, setNewAmount] = useState<number>(0);
-    const [message, setMessage] = useState<string | null>(null);
     const [fetching, setFetching] = useState<boolean>(false);
 
     // STATE ABOUT MODALS
@@ -55,27 +55,32 @@ export const useProductStore = () => {
 
     const handleAddProduct = (event: React.FormEvent<HTMLFormElement>) => { 
         event.preventDefault();
-        if( !validateProductForm(productForm) ) return handleMessage("Completar los campos");
+        if( !validateProductForm(productForm) ) return showMessage({ message: "Completar los campos", type: "warning"});
         addProduct(productForm);
         toggleShowModalAdd();
         setProductForm({ ...initialValues });
+        showMessage({ message: "Producto creado correctamente", type: "success" });
     };
 
     const handleEditProduct = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if( !validateProductForm(productForm) ) return handleMessage("Completar los campos");
+        if( !validateProductForm(productForm) ) return showMessage({ message: "Completar los campos", type: "warning"});
         editProduct(productForm);
         toggleShowModalEdit();
         setProductForm({ ...initialValues });
+        showMessage({ message: "Producto editado correctamente", type: "success" });
+
     }
 
     const handleAddAmount = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if( newAmount === 0) return handleMessage("Completar los campos");
+        if( newAmount === 0) return showMessage({ message: "Completar los campos", type: "warning"});
         addAmount(productForm, newAmount);
         toggleShowModalAmount();
         setNewAmount(0);
         setProductForm({ ...initialValues });
+        showMessage({ message: "Cantidad actualizada correctamente", type: "success" });
+
     }
 
     const handleDeleteProduct = (event: React.FormEvent<HTMLFormElement>) => {
@@ -83,7 +88,7 @@ export const useProductStore = () => {
         toggleShowModalDelete();
         deleteProducto(productForm);
         setProductForm({ ...initialValues });
-
+        showMessage({ message: "Producto eliminado correctamente", type: "success" });
     }
 
     const handleClickCancel = () => {
@@ -93,11 +98,6 @@ export const useProductStore = () => {
         if(showModalDelete) toggleShowModalDelete();
 
         setProductForm({ ...initialValues });
-    }
-
-    const handleMessage = (message: string) => {
-        setMessage(message);
-        setTimeout( () => { setMessage(null) }, 1000);
     }
 
     // METHODS BY CRUD
@@ -118,7 +118,6 @@ export const useProductStore = () => {
 
     const addProduct = (data: Product) => {
         const date = new Date();
-        // console.log(date.getTime());
         data.id = date.getTime().toString();
         addData(collectionName, data);
         getProductsList();
@@ -148,7 +147,6 @@ export const useProductStore = () => {
         showModalAmount,
         showModalEdit,
         showModalDelete,
-        message,
 
         // methods
         setProductForm,

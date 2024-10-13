@@ -4,7 +4,7 @@ import { InputCustom } from "../inputs/InputCustom"
 import { Modal } from "./Modal"
 
 //INTERFACES
-import { ModalProductProps } from "../../interfaces"
+import { ModalProps, Product } from "../../interfaces"
 
 export const ModalAddAmount = (
     {
@@ -15,7 +15,7 @@ export const ModalAddAmount = (
         setValue,
         data,
         value
-    }: ModalProductProps 
+    }: ModalProps<Product>
 ) => {
     return (
         <Modal

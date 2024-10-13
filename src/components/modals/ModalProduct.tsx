@@ -4,7 +4,7 @@ import { InputCustom } from "../inputs/InputCustom";
 import { Modal } from "./Modal";
 
 // INTERFACES
-import { ModalProductProps } from "../../interfaces";
+import { ModalProps, Product } from "../../interfaces";
 
 export const ModalProduct = ({ 
     data,
@@ -14,7 +14,7 @@ export const ModalProduct = ({
     toggleShowModal,
     onSubmit,
     setForm
-} : ModalProductProps) => {
+} : ModalProps<Product>) => {
     return(
         <Modal 
             show = { showModal }
@@ -42,7 +42,7 @@ export const ModalProduct = ({
                     
                     <InputCustom 
                         parentClass="md:w-[45%]"
-                        label="Precio del producto"
+                        label="Precio del producto ($)"
                         placeholder="Ingrese el precio"
                         value={ data.price }
                         onChange={(event) => setForm?.({ ...data, price: event.target.value }) }
