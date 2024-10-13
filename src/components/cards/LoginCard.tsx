@@ -18,7 +18,7 @@ export const LoginCard = ({
 
     return (
         <div className={`absolute w-[90vw] h-[70vh] sm:min-w-[400px] sm:w-[50vw] md:max-w-[500px] bg-[#F0F0F0] shadow-2xl border rounded-lg top-[10vh] sm:top-0 sm:bottom-0 sm:my-auto sm:left-[calc(65vw/2-200px)] md:left-[calc(65vw/2-250px)] z-10 ${ isRegister ? 'animate-out-login' : 'animate-in-login' }`}>
-            <div className="w-full h-full flex flex-col justify-center px-[7%]">
+            <div className="w-full h-full flex flex-col justify-center px-[5%]">
                 <div className="flex justify-start">
                     <img className="w-[100px] h-[100px] mb-[5%]" src="./img/shop.png" alt="" />
                 </div>
@@ -42,15 +42,20 @@ export const LoginCard = ({
 
                 />
 
-                <div className="w-full flex flex-col items-center">
+                <div className="w-full flex flex-col items-center mb-2">
                     <ButtonCustom 
                         text="Ingresar"
                         type="button"
                         buttonClass="w-[150px]"
                         onClick={ handleClick }
                     />
-
-                    <label className="mt-3 text-orange-700 underline cursor-pointer" onClick={ toggleIsRegister }>Registrarse</label>
+                    <label className="mt-3 text-lg text-center text-pretty">
+                        <span>¿No tiene una cuenta? </span> 
+                        <span 
+                            onClick={ toggleIsRegister } 
+                            className="text-orange-700 underline cursor-pointer"
+                        >Registrate aqui</span>
+                    </label>
                 </div>
             </div>
         </div>

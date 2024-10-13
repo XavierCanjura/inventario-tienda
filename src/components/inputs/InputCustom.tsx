@@ -17,7 +17,7 @@ export const InputCustom = (
         <div className={`w-full min-h-max md:w-[250px] my-1 ${ parentClass }`}>
             {
                 label !== undefined && (
-                    <p>{ label }</p>
+                    <p className="font-bold">{ label }</p>
                 )
             }
             <input 

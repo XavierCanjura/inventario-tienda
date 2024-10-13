@@ -82,12 +82,12 @@ body {
 @media (width <= 640px){
 
     .animate-second-background-reverse {
-        animation: invert-second-background ease-in-out 1s;
+        animation: invert-second-background ease-in-out 0.7s;
         animation-fill-mode: forwards;
     }
     
     .animate-second-background-normal {
-        animation: normal-second-background ease-in-out 1s;
+        animation: normal-second-background ease-in-out 0.7s;
         animation-fill-mode: forwards;
     }
 
