@@ -5,10 +5,10 @@ export const sessionStore = () => {
         sessionStorage.setItem('auth', dataString);
     }
 
-    function getSession<T>(): T | string {
+    function getSession<T>(): T | undefined {
         const dataString = sessionStorage.getItem('auth');
 
-        if(!existSession()) return "No se encontro la session";
+        if(!existSession()) return;
 
         const data: T = JSON.parse(dataString!);
         
