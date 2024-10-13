@@ -11,7 +11,7 @@ export const PrivateRoutes = () => {
 
 
     useEffect(() => {
-        if(!existSession('auth')) return navigateToLogin();
+        if(!existSession()) return navigateToLogin();
     });
 
     return (

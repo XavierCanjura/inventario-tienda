@@ -1,16 +1,15 @@
-import { ModalProductProps } from "../../interfaces"
+import { ModalProps } from "../../interfaces"
 import { ButtonCustom } from "../buttons/ButtonCustom"
 import { Modal } from "./Modal"
 
-export const ModalDelete = (
+export const ModalDelete = <T,>(
     {
-        data,
         showModal, 
         title,
         toggleShowModal,
         handleClickCancel,
         onSubmit
-    }: ModalProductProps
+    }: ModalProps<T>
 ) => {
     
     return (
@@ -21,7 +20,7 @@ export const ModalDelete = (
         >
             <form  method="post" onSubmit={ onSubmit }>
 
-                <h4 className="font-[600] text-lg md:text-2xl text-center mt-4">¿Desea eliminar { data.name }?</h4>
+                <h4 className="font-[600] text-lg md:text-2xl text-center mt-4">¿Desea eliminar el registro?</h4>
                 <h5 className="font-[500] text-base md:text-xl text-center">Si elimina el registro, no podra recuperarlo </h5>
 
 
