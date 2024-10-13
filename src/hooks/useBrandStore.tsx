@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { firebaseApi } from "../apis/firebase";
-import { Brand, User } from "../interfaces";
+import { Brand, Option, User } from "../interfaces";
 import { showMessage } from "../helpers/message";
 import { sessionStore } from "../helpers/sessionStore";
 import { useAuthStore } from "./useAuthStore";
@@ -25,6 +25,7 @@ export const useBrandStore = () => {
     const [inputSearch, setInputSearch] = useState<string>('');
     const [brandForm, setBrandForm] = useState<Brand>(initialValues);
     const [fetching, setFetching] = useState<boolean>(false);
+    const [brandsByOption, setBrandsByOption] = useState<Option[]>([])
 
     // STATE ABOUT MODALS
     const [showModalAdd, setShowModalAdd] = useState<boolean>(false);
@@ -78,6 +79,7 @@ export const useBrandStore = () => {
         toggleShowModalDelete();
         deleteBrand(brandForm);
         setBrandForm({ ...initialValues });
+        getBrandsList();
         showMessage({ message: "Marca eliminada correctamente", type: "success" });
     }
 
@@ -89,32 +91,61 @@ export const useBrandStore = () => {
         setBrandForm({ ...initialValues });
     }
 
-    // METHODS BY CRUD
-    const getBrandsList = async () => {
+    const getBrandsList = async (): Promise<void> => {
+        const auth = getSession<User>();
+        if( !auth ) return navigateToLogin();
+
         setFetching(true);
+        const brands = await getBrandsRequest(auth);
+        setBrandsList([ ...brands ]); 
+        setFetching(false);
+    }
+
+    const getBrandByOption = async (): Promise<void> => {
+
+        const auth = getSession<User>();
+        if( !auth ) return navigateToLogin();
+
+        const brands: Brand[] = await getBrandsRequest(auth);
+        const brandsByOption: Option[] = brands.map( brand => ({
+            label: brand.name,
+            value: brand.id
+        }));
+
+        if(brandsByOption.length === 0) showMessage({ message: "Antes de crear un producto, necesita crear una marca", type: 'info' })
+
+        setBrandsByOption([ ...brandsByOption ]);
+    }
+    
+
+    // METHODS BY CRUD
+    const getBrandsRequest = async (auth: User): Promise<Brand[]> => { 
+
         const brands = await getData(collectionName) as Brand[];
-        const brandMapper: Brand[] = brands.map((brand) => ({
+        const brandsFilter = brands.filter( brand => brand.idUser == auth.id );
+        const brandMapper: Brand[] = brandsFilter.map((brand) => ({
             id: brand.id.toString(),
             name: brand.name,
             image: brand.image,
             idUser: brand.idUser
-        }))
-        setBrandsList([ ...brandMapper ]); 
-        setFetching(false);
+        }));
+
+        return brandMapper;
     }
+
 
     const addBrand = (data: Brand): void => {
         const date = new Date();
         data.id = date.getTime().toString();
         addData(collectionName, data);
     }
+
     const editBrand = (data: Brand) => {
         updateData(collectionName, data);
-        getBrandsList();
     }
+
     const deleteBrand = (data: Brand) => {
         deleteData(collectionName, data.id);
-        getBrandsList();
     }
 
     return {
@@ -126,12 +157,14 @@ export const useBrandStore = () => {
         showModalAdd,
         showModalDelete,
         showModalEdit,
+        brandsByOption,
 
 
         // methods
         setInputSearch,
         setBrandForm,
         getBrandsList,
+        getBrandByOption,
         searchProducts,
         handleAddBrand,
         handleEditBrand,

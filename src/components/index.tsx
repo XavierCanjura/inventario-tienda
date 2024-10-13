@@ -9,4 +9,5 @@ export { ModalDelete } from "./modals/ModalDelete";
 export { ModalProduct } from "./modals/ModalProduct";
 export { ProductItem } from "./cards/ProductItem";
 export { RegisterCard } from "./cards/RegisterCard";
+export { SelectCustom } from "./inputs/SelectCustom";
 export { UserItem } from "./cards/UserItem";

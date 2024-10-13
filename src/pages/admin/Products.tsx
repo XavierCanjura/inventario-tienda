@@ -5,7 +5,7 @@ import { useEffect } from "react"
 import { ButtonCustom, InputCustom, ModalAddAmount, ModalDelete, ModalProduct, ProductItem } from "../../components"
 
 // CUSTOM HOOKS
-import { useProductStore } from "../../hooks"
+import { useBrandStore, useProductStore } from "../../hooks"
 
 // LAYOUT
 import { PrivateLayout } from "../../layouts/PrivateLayout"
@@ -28,20 +28,23 @@ export const Products = () => {
         setNewAmount,
         setInputSearch,
         searchProducts,
+        getProductsList,
         handleAddAmount,
         handleAddProduct,
         handleEditProduct,
         handleDeleteProduct,
         handleClickCancel,
-        getProductsList,
         toggleShowModalAdd,
         toggleShowModalAmount,
         toggleShowModalEdit,
         toggleShowModalDelete
     } = useProductStore();
 
+    const { brandsByOption, getBrandByOption } = useBrandStore();
+
     useEffect( () => {
         getProductsList();
+        getBrandByOption();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -53,9 +56,10 @@ export const Products = () => {
                         <InputCustom 
                             placeholder="Buscar"
                             onChange={ (event) => setInputSearch(event.target.value) }
-
                         />
+                        
                         <ButtonCustom 
+                            disabled={ brandsByOption.length === 0 }
                             text="Agregar Producto"
                             buttonClass="hidden md:block"
                             onClick={ toggleShowModalAdd }
@@ -96,6 +100,7 @@ export const Products = () => {
                 onSubmit = { handleAddProduct }
                 setForm = { setProductForm }
                 data={ productForm }
+                optionsMap={ { "brands": brandsByOption  } }
             />
 
             {/* modal for edit products */}
@@ -107,6 +112,8 @@ export const Products = () => {
                 setForm = { setProductForm }
                 data = { productForm }
                 isCreate = { false }
+                optionsMap={ { "brands": brandsByOption  } }
+
             />
 
             {/* Modal for add amount */}

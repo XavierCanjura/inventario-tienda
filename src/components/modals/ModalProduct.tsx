@@ -5,16 +5,20 @@ import { Modal } from "./Modal";
 
 // INTERFACES
 import { ModalProps, Product } from "../../interfaces";
+import { SelectCustom } from "../inputs/SelectCustom";
 
-export const ModalProduct = ({ 
-    data,
-    isCreate = true,
-    showModal,
-    handleClickCancel,
-    toggleShowModal,
-    onSubmit,
-    setForm
-} : ModalProps<Product>) => {
+export const ModalProduct = (
+    { 
+        data,
+        isCreate = true,
+        showModal,
+        handleClickCancel,
+        toggleShowModal,
+        onSubmit,
+        setForm,
+        optionsMap
+    } : ModalProps<Product>
+) => {
     return(
         <Modal 
             show = { showModal }
@@ -48,8 +52,17 @@ export const ModalProduct = ({
                         onChange={(event) => setForm?.({ ...data, price: event.target.value }) }
                     />
 
-                    <InputCustom 
+                    <SelectCustom 
                         parentClass="md:w-[45%]"
+                        label="Marcas"
+                        placeholder="Selecciona una marca"
+                        optionsList={ optionsMap ? optionsMap!["brands"] : [] }
+                        value={ data.marca }
+                        onChange={ (event) => setForm?.({ ...data, marca: event.target.value }) }
+                    />
+
+                    <InputCustom 
+                        parentClass="!w-full"
                         label="Imagen del producto"
                         placeholder="Copie la direccion de la imagen"
                         value={ data.image }
