@@ -3,7 +3,9 @@ import { PrivateLayout } from "../../layouts/PrivateLayout"
 export const Ventas = () => {
     return (
         <>
-            <PrivateLayout>
+            <PrivateLayout
+                title="Ventas"
+            >
                 <div>Ventas</div>
             </PrivateLayout>
         </>

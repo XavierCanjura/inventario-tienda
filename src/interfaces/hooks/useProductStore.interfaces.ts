@@ -6,4 +6,5 @@ export interface Product {
     image: string;
     marca: string;
     idUser: string;
+    totalHistory?: number;
 }

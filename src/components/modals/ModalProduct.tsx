@@ -36,6 +36,7 @@ export const ModalProduct = (
                     />
 
                     <InputCustom 
+                        disabled={ !isCreate }
                         parentClass="md:w-[45%]"
                         label="Cantidad de producto"
                         placeholder="Ingrese la cantidad"

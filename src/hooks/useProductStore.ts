@@ -16,7 +16,8 @@ const initialValues: Product = {
     price: '', 
     image: '', 
     marca: '',
-    idUser: ''
+    idUser: '',
+    totalHistory: 0,
 }
 
 export const useProductStore = () => {
@@ -29,7 +30,7 @@ export const useProductStore = () => {
     // STATE ABOUT PRODUCTS
     const [inputSearch, setInputSearch] = useState<string>('');
     const [productsList, setProductsList] = useState<Product[]>([]);
-    const [productForm, setProductForm] = useState<Product>(initialValues);
+    const [productForm, setProductForm] = useState<Product>({ ...initialValues });
     const [newAmount, setNewAmount] = useState<number>(0);
     const [fetching, setFetching] = useState<boolean>(false);
 
@@ -69,7 +70,7 @@ export const useProductStore = () => {
         const auth = getSession<User>();
         if( !auth ) return navigateToLogin();
 
-        addProduct({ ...productForm, idUser: auth.id });
+        addProduct({ ...productForm, idUser: auth.id, totalHistory: productForm.amount });
         toggleShowModalAdd();
         setProductForm({ ...initialValues });
         showMessage({ message: "Producto creado correctamente", type: "success" });
@@ -78,7 +79,7 @@ export const useProductStore = () => {
     const handleEditProduct = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if( !validateProductForm(productForm) ) return showMessage({ message: "Completar los campos", type: "warning"});
-        editProduct(productForm);
+        editProduct({ ...productForm });
         toggleShowModalEdit();
         setProductForm({ ...initialValues });
         showMessage({ message: "Producto editado correctamente", type: "success" });

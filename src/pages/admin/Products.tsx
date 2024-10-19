@@ -96,7 +96,7 @@ export const Products = () => {
             <ModalProduct
                 showModal = { showModalAdd }
                 handleClickCancel = { handleClickCancel }
-                toggleShowModal = { toggleShowModalAdd }
+                toggleShowModal = { handleClickCancel }
                 onSubmit = { handleAddProduct }
                 setForm = { setProductForm }
                 data={ productForm }
@@ -107,7 +107,7 @@ export const Products = () => {
             <ModalProduct
                 showModal = { showModalEdit }
                 handleClickCancel = { handleClickCancel }
-                toggleShowModal = { toggleShowModalEdit }
+                toggleShowModal = { handleClickCancel }
                 onSubmit = { handleEditProduct }
                 setForm = { setProductForm }
                 data = { productForm }
@@ -120,7 +120,7 @@ export const Products = () => {
             <ModalAddAmount 
                 showModal = { showModalAmount }
                 handleClickCancel = { handleClickCancel }
-                toggleShowModal = { toggleShowModalAmount }
+                toggleShowModal = { handleClickCancel }
                 onSubmit = { handleAddAmount }
                 setValue = { (event) => setNewAmount(Number(event.target.value)) }
                 data = { productForm }
@@ -131,7 +131,7 @@ export const Products = () => {
             <ModalDelete 
                 showModal = { showModalDelete }
                 data={ productForm }
-                toggleShowModal={ toggleShowModalDelete }
+                toggleShowModal={ handleClickCancel }
                 handleClickCancel={ handleClickCancel }
                 onSubmit={ handleDeleteProduct } 
                 title={ `Eliminar - ${ productForm.name }` }               
