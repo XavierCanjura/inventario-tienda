@@ -2,6 +2,8 @@ export type { Brand } from './hooks/useBrandStore.interfaces';
 export type { LoginForm } from './hooks/useAuthStore.interface';
 export type { Product } from './hooks/useProductStore.interfaces';
 export type { User } from './hooks/useUserStore.interfaces';
+export type { Venta } from './hooks/useVentaStore.interface';
+
 
 export type { routesProps } from './routes/routes.interfaces';
 

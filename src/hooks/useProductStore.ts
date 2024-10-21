@@ -94,7 +94,12 @@ export const useProductStore = () => {
         setNewAmount(0);
         setProductForm({ ...initialValues });
         showMessage({ message: "Cantidad actualizada correctamente", type: "success" });
+    }
 
+    const subtractAmount = (products: Product[]) => {
+        products.forEach( product => {
+            editProduct(product);
+        })
     }
 
     const handleDeleteProduct = (event: React.FormEvent<HTMLFormElement>) => {
@@ -131,7 +136,8 @@ export const useProductStore = () => {
             image: product.image,
             marca: product.marca,
             price: product.price,
-            idUser: product.idUser
+            idUser: product.idUser,
+            totalHistory: product.totalHistory
         }) );
 
         setProductsList([ ...productsMapper ]);
@@ -150,6 +156,8 @@ export const useProductStore = () => {
     }
     const addAmount = (data: Product, newAmount: number) => {
         data.amount = data.amount + newAmount;
+        data.totalHistory = data.totalHistory ? data.totalHistory + newAmount : newAmount;
+        console.log(data)
         updateData(collectionName, data);
         getProductsListByIdUser();
     }
@@ -175,6 +183,7 @@ export const useProductStore = () => {
         setNewAmount,
         setInputSearch,
         searchProducts,
+        subtractAmount,
         handleAddAmount,
         handleAddProduct,
         handleEditProduct,

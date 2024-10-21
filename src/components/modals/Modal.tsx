@@ -11,7 +11,7 @@ export const Modal = (
     } 
 ) => {
     return (
-        <div className={`${ show ? "flex": "hidden"} justify-center items-center absolute z-[1000] bg-black/25 w-dvw h-dvh top-0 left-0`}>
+        <div className={`${ show ? "flex": "hidden"} justify-center items-center absolute z-[1000] bg-black/25 w-full h-dvh top-0 left-0`}>
             <div className="bg-[#F0F0F0] w-[90vw] md:w-[50vw] h-max rounded-[20px] shadow-lg">
                 <div className="w-full flex flex-col px-5 py-3">
                     {/* Title */}

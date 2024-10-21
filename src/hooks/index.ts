@@ -1,3 +1,4 @@
+export { useVentaStore } from "./useVentasStore";
 export { useAuthStore } from "./useAuthStore";
 export { useBrandStore } from "./useBrandStore";
 export { useUserStore } from "./useUserStore";
