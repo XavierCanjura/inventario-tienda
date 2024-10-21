@@ -7,4 +7,5 @@ export interface Product {
     marca: string;
     idUser: string;
     totalHistory?: number;
+    priceBuy: string;
 }

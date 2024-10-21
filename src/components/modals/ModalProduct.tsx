@@ -47,8 +47,16 @@ export const ModalProduct = (
                     
                     <InputCustom 
                         parentClass="md:w-[45%]"
-                        label="Precio del producto ($)"
-                        placeholder="Ingrese el precio"
+                        label="Precio de compra del producto ($)"
+                        placeholder="Ingrese el precio de compra"
+                        value={ data.priceBuy }
+                        onChange={(event) => setForm?.({ ...data, priceBuy: event.target.value }) }
+                    />
+
+                    <InputCustom 
+                        parentClass="md:w-[45%]"
+                        label="Precio de venta del producto ($)"
+                        placeholder="Ingrese el precio de venta"
                         value={ data.price }
                         onChange={(event) => setForm?.({ ...data, price: event.target.value }) }
                     />

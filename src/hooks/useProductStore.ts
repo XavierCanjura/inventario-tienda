@@ -18,6 +18,7 @@ const initialValues: Product = {
     marca: '',
     idUser: '',
     totalHistory: 0,
+    priceBuy: ''
 }
 
 export const useProductStore = () => {
@@ -137,7 +138,8 @@ export const useProductStore = () => {
             marca: product.marca,
             price: product.price,
             idUser: product.idUser,
-            totalHistory: product.totalHistory
+            totalHistory: product.totalHistory,
+            priceBuy: product.priceBuy
         }) );
 
         setProductsList([ ...productsMapper ]);

@@ -23,22 +23,24 @@ export const Statistics = () => {
         let totalLosses: number = 0;
 
         productsList.forEach( product => {
-            totalLosses += product.amount * Number(product.price);
+            totalLosses += product.totalHistory! * Number(product.priceBuy);
         })
 
         return totalLosses;
     }
 
-    const getEarnings = () => {
+    const getTotalSales = (): number => {
         let totalEarnings: number = 0;
 
         salesList.forEach( sale => {
             totalEarnings += sale.amountCart * Number(sale.price);
         });
 
-        totalEarnings = totalEarnings - getLosses();
-
         return totalEarnings;
+    }
+
+    const getEarnings = () => {
+        return  getTotalSales() - getLosses();
     }
 
     return (
@@ -52,13 +54,19 @@ export const Statistics = () => {
                         data={ getTotalStock().toString() }
                     />
                     <CardDetail 
-                        title="Gastos"
-                        data={ `$${getLosses()}` }
+                        title="Total de Gastos"
+                        data={ `$${ getLosses().toFixed(2) }` }
                         dataClass="text-red-500"
                     />
                     <CardDetail 
+                        title="Total de Ventas"
+                        data={ `$${ getTotalSales().toFixed(2) }` }
+                        dataClass="text-green-500"
+                    />
+                    <CardDetail 
                         title="Ganancias"
-                        data={`$${ getEarnings() }`}
+                        description="Ventas - Gastos"
+                        data={`$${ getEarnings().toFixed(2) }`}
                         dataClass={` ${ getEarnings() < 0 ? 'text-red-500' : 'text-green-500' } `}
                     />
 
@@ -71,6 +79,7 @@ export const Statistics = () => {
 const CardDetail = ({
     title,
     data,
+    description,
     dataClass
 }: {
     title: string;
@@ -79,8 +88,9 @@ const CardDetail = ({
     dataClass?: string;
 }) => {
     return(
-        <div className="col-span-12 sm:col-span-6 md:col-span-4 rounded-md border bg-white py-2 px-4">
+        <div className="col-span-12 sm:col-span-6 xl:col-span-4 rounded-md border bg-white py-2 px-4">
             <h2 className="text-xl md:text-2xl font-semibold">{ title }</h2>
+            <p>{ description }</p>
             <p className={`text-lg font-semibold ${ dataClass }`}>{ data }</p>
         </div>
     )
