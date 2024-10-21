@@ -2,16 +2,13 @@
 import { useEffect } from "react"
 
 // COMPONENTS
-import { ButtonCustom, InputCustom, ModalAddAmount, ModalDelete, ModalProduct, ProductItem } from "../../components"
+import { ButtonCustom, ButttonFab, InputCustom, ModalAddAmount, ModalDelete, ModalProduct, ProductItem } from "../../components"
 
 // CUSTOM HOOKS
 import { useBrandStore, useProductStore } from "../../hooks"
 
 // LAYOUT
 import { PrivateLayout } from "../../layouts/PrivateLayout"
-
-// ICONS
-import { AddIcon } from "../../assets/icons/Add"
 
 export const Products = () => {
 
@@ -86,9 +83,10 @@ export const Products = () => {
                         }
                     </div>
                 </div>
-                <div className="md:hidden fixed w-[50px] h-[50px] bg-orange-600 rounded-full bottom-2 right-2 shadow-lg" onClick={ toggleShowModalAdd }>
-                    <button className="w-full h-full flex justify-center items-center"><AddIcon /></button>
-                </div>
+                <ButttonFab 
+                    onClick={ toggleShowModalAdd }
+                />
+                
 
             </PrivateLayout>
 

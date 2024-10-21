@@ -2,7 +2,7 @@
 import { PrivateLayout } from "../../layouts/PrivateLayout"
 
 // COMPONENTS
-import { BrandItem, ButtonCustom, InputCustom, ModalBrand, ModalDelete } from "../../components"
+import { BrandItem, ButtonCustom, ButttonFab, InputCustom, ModalBrand, ModalDelete } from "../../components"
 import { useBrandStore } from "../../hooks"
 import { useEffect } from "react";
 
@@ -66,6 +66,9 @@ export const Marcas = () => {
                         ))
                     }
                 </div>
+                <ButttonFab 
+                    onClick={ toggleShowModalAdd }
+                />
             </PrivateLayout>
 
             <ModalBrand

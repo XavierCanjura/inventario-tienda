@@ -1,5 +1,8 @@
+export { CartItem } from "./cards/CartItem";
+
 export { BrandItem } from "./cards/BrandItem";
 export { ButtonCustom } from "./buttons/ButtonCustom";
+export { ButttonFab } from "./buttons/ButttonFab";
 export { InputCustom } from "./inputs/InputCustom";
 export { LoginCard } from "./cards/LoginCard";
 export { Modal } from "./modals/Modal";
@@ -11,3 +14,4 @@ export { ProductItem } from "./cards/ProductItem";
 export { RegisterCard } from "./cards/RegisterCard";
 export { SelectCustom } from "./inputs/SelectCustom";
 export { UserItem } from "./cards/UserItem";
+export { VentaItem } from "./cards/VentaItem";
